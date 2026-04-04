@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import Button from '../../../components/ui/Button.jsx'
 import Container from '../../../components/ui/Container.jsx'
 import Reveal from '../../../components/ui/Reveal.jsx'
-import deemarImage from '../../../assets/images/deemar-people-335298_1920.jpg'
+import deemarImage from '../../../assets/Images/deemar-people-335298_1920.jpg'
 
 export default function FinalCtaSection() {
   return (
