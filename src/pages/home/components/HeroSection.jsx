@@ -13,6 +13,9 @@ function Stat({ label, value }) {
         {label}
       </div>
     </div>
+
+
+
   )
 }
 
