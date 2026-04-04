@@ -9,36 +9,33 @@ export default function Reveal({ children, className = '' }) {
   )
 
   useEffect(() => {
-    if (visible) return
-
     const element = ref.current
     if (!element) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
+        setVisible(entry.isIntersecting)
       },
-      { threshold: 0.15 },
+      {
+        threshold: 0.18,
+        rootMargin: '0px 0px -8% 0px',
+      },
     )
 
     observer.observe(element)
     return () => observer.disconnect()
-  }, [visible])
+  }, [])
 
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 will-change-transform ${
+      className={`transition-all duration-700 ease-out will-change-transform ${
         visible
           ? 'translate-y-0 opacity-100'
-          : 'translate-y-6 opacity-0'
+          : 'translate-y-8 opacity-0'
       } ${className}`}
     >
       {children}
     </div>
   )
 }
-
