@@ -1,15 +1,16 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import Button from '../../components/ui/Button.jsx'
 import Container from '../../components/ui/Container.jsx'
+import PageHero from '../../components/ui/PageHero.jsx'
 import Reveal from '../../components/ui/Reveal.jsx'
 
 function Tier({ name, price, tagline, features, highlight }) {
   return (
     <div
-      className={`relative rounded-3xl border bg-white p-7 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:bg-slate-900/40 ${
+      className={`relative rounded-[2rem] border bg-white/82 p-7 shadow-[0_18px_44px_rgba(15,23,42,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_24px_52px_rgba(15,23,42,0.12)] ${
         highlight
-          ? 'border-indigo-300 ring-1 ring-indigo-200 dark:border-indigo-500/60 dark:ring-indigo-500/15'
-          : 'border-slate-200 dark:border-slate-800'
+          ? 'border-indigo-300 ring-1 ring-indigo-200'
+          : 'border-white/70'
       }`}
     >
       {highlight ? (
@@ -20,30 +21,23 @@ function Tier({ name, price, tagline, features, highlight }) {
 
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="text-base font-semibold">{name}</h3>
-          <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
-            {tagline}
-          </p>
+          <h3 className="text-base font-semibold text-slate-950">{name}</h3>
+          <p className="mt-1 text-sm text-slate-600">{tagline}</p>
         </div>
         <div className="text-right">
-          <div className="text-3xl font-semibold tracking-tight">{price}</div>
-          <div className="text-xs text-slate-500 dark:text-slate-400">
-            per project
-          </div>
+          <div className="text-3xl font-semibold tracking-tight text-slate-950">{price}</div>
+          <div className="text-xs text-slate-500">per project</div>
         </div>
       </div>
 
-      <div className="mt-6 h-px w-full bg-slate-200 dark:bg-slate-800" />
+      <div className="mt-6 h-px w-full bg-slate-200" />
 
-      <ul className="mt-6 space-y-2 text-sm text-slate-700 dark:text-slate-200">
+      <ul className="mt-6 space-y-2 text-sm text-slate-700">
         {features.map((f) => (
           <li key={f} className="flex items-start gap-2">
-            <span className="mt-1 inline-flex size-4 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-700 dark:bg-emerald-400/15 dark:text-emerald-300">
+            <span className="mt-1 inline-flex size-4 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-700">
               <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  fill="currentColor"
-                  d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
-                />
+                <path fill="currentColor" d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
               </svg>
             </span>
             <span>{f}</span>
@@ -55,11 +49,7 @@ function Tier({ name, price, tagline, features, highlight }) {
         <Button
           as={Link}
           to="/contact"
-          className={
-            highlight
-              ? ''
-              : 'bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-white/90'
-          }
+          className={highlight ? '' : 'bg-slate-900 hover:bg-slate-800'}
         >
           Get started
         </Button>
@@ -100,59 +90,70 @@ export default function ServicesPage() {
       price: 'INR 49,999',
       tagline: 'For premium polish and brand depth.',
       features: [
-        'Custom sections + advanced animations',
-        'More pages (case studies/blog) if needed',
-        'Design system pass (colors/typography)',
-        'Performance + accessibility review',
+        'Custom sections and advanced animations',
+        'Additional pages if needed',
+        'Design system pass for colors and typography',
+        'Performance and accessibility review',
         'Two revision rounds',
       ],
     },
   ]
 
   return (
-    <section>
-      <Container className="py-14 sm:py-16">
-        <Reveal>
-          <p className="text-xs font-semibold tracking-widest text-indigo-600 dark:text-indigo-400">
-            SERVICES & PRICING
-          </p>
-          <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
-            Clear packages. Premium output.
-          </h1>
-          <p className="mt-3 max-w-3xl text-sm text-slate-600 dark:text-slate-300">
-            Choose a plan that fits your timeline and scope. We can also tailor
-            a custom package - just contact us.
-          </p>
-        </Reveal>
-
-        <div className="mt-10 grid gap-4 lg:grid-cols-3">
-          {tiers.map((tier) => (
-            <Reveal key={tier.name}>
-              <Tier {...tier} />
-            </Reveal>
-          ))}
-        </div>
-
-        <div className="mt-12 grid gap-6 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900/40 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
-          <Reveal>
-            <div>
-              <h2 className="text-2xl font-semibold tracking-tight">
-                Need a custom quote?
-              </h2>
-              <p className="mt-2 max-w-2xl text-sm text-slate-600 dark:text-slate-300">
-                Tell us your industry, your target customers, and the pages you
-                need. We'll recommend the fastest path to a premium site.
-              </p>
-            </div>
-          </Reveal>
-          <Reveal className="justify-self-start lg:justify-self-end">
+    <>
+      <PageHero
+        eyebrow="Services & Pricing"
+        title="Structured packages for brands that want a better-looking web presence"
+        description="Choose a package that fits your timeline and scope, then refine the content, visuals, and conversion path around what your business actually needs."
+        stats={[
+          { label: 'Speed', value: 'Fast launch' },
+          { label: 'Design', value: 'Premium polish' },
+          { label: 'Support', value: 'Guided revisions' },
+          { label: 'Flexibility', value: 'Custom scope' },
+        ]}
+        actions={
+          <>
             <Button as={Link} to="/contact">
               Request a quote
             </Button>
-          </Reveal>
-        </div>
-      </Container>
-    </section>
+            <Button as={Link} to="/blog" variant="secondary">
+              Read our thinking
+            </Button>
+          </>
+        }
+      />
+
+      <section>
+        <Container className="pb-16 pt-4 sm:pb-20">
+          <div className="grid gap-4 lg:grid-cols-3">
+            {tiers.map((tier) => (
+              <Reveal key={tier.name}>
+                <Tier {...tier} />
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="mt-12 grid gap-6 rounded-[2rem] border border-white/70 bg-white/82 p-8 shadow-[0_22px_52px_rgba(15,23,42,0.08)] sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
+            <Reveal>
+              <div>
+                <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
+                  Need a custom quote?
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-600">
+                  Tell us your industry, your target customers, and the pages you need.
+                  We&apos;ll recommend the fastest path to a premium site.
+                </p>
+              </div>
+            </Reveal>
+            <Reveal className="justify-self-start lg:justify-self-end">
+              <Button as={Link} to="/contact">
+                Request a quote
+              </Button>
+            </Reveal>
+          </div>
+        </Container>
+      </section>
+    </>
   )
 }
 

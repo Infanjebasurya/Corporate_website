@@ -1,6 +1,8 @@
 import { useLocation } from 'react-router-dom'
+import CookieConsentBanner from '../components/site/CookieConsentBanner.jsx'
 import Footer from '../components/site/Footer.jsx'
 import Header from '../components/site/Header.jsx'
+import ScrollToTopButton from '../components/site/ScrollToTopButton.jsx'
 import { Outlet } from 'react-router-dom'
 
 export default function SiteLayout() {
@@ -20,6 +22,8 @@ export default function SiteLayout() {
         </div>
       </main>
       <Footer />
+      <ScrollToTopButton />
+      <CookieConsentBanner />
     </div>
   )
 }
