@@ -8,45 +8,7 @@ const navItems = [
     key: 'home',
     label: 'Home',
     path: '/',
-    sections: [
-      {
-        title: 'Overview',
-        links: [
-          {
-            label: 'Hero section',
-            description: 'Main headline, positioning, and the first premium impression.',
-            path: '/',
-            accent: 'indigo',
-            icon: <path fill="currentColor" d="M12 3 4 8v11h5v-6h6v6h5V8l-8-5Z" />,
-          },
-          {
-            label: 'Feature highlights',
-            description: 'Core value blocks, fast-scan benefits, and conversion copy.',
-            path: '/',
-            accent: 'violet',
-            icon: <path fill="currentColor" d="M5 7h14v2H5V7Zm0 4h14v2H5v-2Zm0 4h9v2H5v-2Z" />,
-          },
-        ],
-      },
-      {
-        title: 'Action',
-        links: [
-          {
-            label: 'Launch CTA',
-            description: 'The homepage call to action that guides visitors into inquiry.',
-            path: '/contact',
-            accent: 'blue',
-            icon: <path fill="currentColor" d="M13 3 4 14h6l-1 7 9-11h-6l1-7Z" />,
-          },
-        ],
-      },
-    ],
-    feature: {
-      eyebrow: 'Home',
-      title: 'Modern Presence',
-      subtitle: 'Your current homepage content, presented inside a richer navigation experience.',
-      path: '/',
-    },
+    direct: true,
   },
   {
     key: 'about',
@@ -164,6 +126,50 @@ const navItems = [
     },
   },
   {
+    key: 'blog',
+    label: 'Blog',
+    path: '/blog',
+    sections: [
+      {
+        title: 'Read',
+        links: [
+          {
+            label: 'Latest insights',
+            description: 'Thoughtful articles on premium web presence, messaging, and growth.',
+            path: '/blog',
+            accent: 'indigo',
+            icon: <path fill="currentColor" d="M6 4h9a3 3 0 0 1 3 3v13l-4-2-4 2-4-2-4 2V7a3 3 0 0 1 3-3h1Z" />,
+          },
+          {
+            label: 'Design systems',
+            description: 'Editorial thinking around consistency, maintainability, and polish.',
+            path: '/blog',
+            accent: 'violet',
+            icon: <path fill="currentColor" d="M4 4h7v7H4V4Zm9 0h7v3h-7V4Zm0 5h7v11h-7V9ZM4 13h7v7H4v-7Z" />,
+          },
+        ],
+      },
+      {
+        title: 'Action',
+        links: [
+          {
+            label: 'Plan your site',
+            description: 'Move from inspiration into a focused project conversation.',
+            path: '/contact',
+            accent: 'blue',
+            icon: <path fill="currentColor" d="M3 5h18v14H3V5Zm2 2v10h14V7H5Zm2 2h10v2H7V9Zm0 4h7v2H7v-2Z" />,
+          },
+        ],
+      },
+    ],
+    feature: {
+      eyebrow: 'Blog',
+      title: 'Fresh Ideas',
+      subtitle: 'Use content to strengthen trust, explain your expertise, and elevate the brand.',
+      path: '/blog',
+    },
+  },
+  {
     key: 'contact',
     label: 'Contact',
     path: '/contact',
@@ -225,6 +231,24 @@ function DesktopNavLink({ label, isActive, onEnter }) {
   )
 }
 
+function DesktopNavRoute({ label, path, onClick }) {
+  return (
+    <RouterNavLink
+      to={path}
+      onClick={onClick}
+      className={({ isActive }) =>
+        `rounded-2xl px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.08em] transition ${
+          isActive
+            ? 'bg-slate-100 text-slate-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]'
+            : 'text-slate-900 hover:bg-slate-50'
+        }`
+      }
+    >
+      {label}
+    </RouterNavLink>
+  )
+}
+
 function MobileNavLink({ label, path, onClick }) {
   return (
     <RouterNavLink
@@ -275,7 +299,8 @@ export default function Header() {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [open])
 
-  const activeNav = navItems.find((item) => item.key === activeKey) ?? null
+  const activeNav =
+    navItems.find((item) => item.key === activeKey && !item.direct) ?? null
 
   return (
     <header className="sticky top-0 z-50 pt-4 sm:pt-5">
@@ -294,12 +319,21 @@ export default function Header() {
 
               <nav className="flex items-center gap-2" aria-label="Primary">
                 {navItems.map((item) => (
-                  <DesktopNavLink
-                    key={item.key}
-                    label={item.label}
-                    isActive={activeKey === item.key}
-                    onEnter={() => setActiveKey(item.key)}
-                  />
+                  item.direct ? (
+                    <DesktopNavRoute
+                      key={item.key}
+                      label={item.label}
+                      path={item.path}
+                      onClick={() => setActiveKey('')}
+                    />
+                  ) : (
+                    <DesktopNavLink
+                      key={item.key}
+                      label={item.label}
+                      isActive={activeKey === item.key}
+                      onEnter={() => setActiveKey(item.key)}
+                    />
+                  )
                 ))}
               </nav>
 
@@ -313,7 +347,7 @@ export default function Header() {
 
             {activeNav ? (
               <div className="border-t border-slate-200/80 bg-slate-50/80 px-8 py-10 lg:px-12 lg:py-12">
-                <div className="grid gap-10 xl:grid-cols-[1.5fr_0.88fr]">
+                <div className={`grid gap-10 ${activeNav.feature ? 'xl:grid-cols-[1.5fr_0.88fr]' : ''}`}>
                   <div className="grid gap-10 md:grid-cols-2">
                     {activeNav.sections.map((section) => (
                       <div key={section.title}>
@@ -352,31 +386,33 @@ export default function Header() {
                     ))}
                   </div>
 
-                <Link
-                  to={activeNav.feature.path}
-                  onClick={() => setActiveKey('')}
-                  className="group self-start rounded-[1.7rem] border border-slate-200/90 bg-white/90 p-3 shadow-[0_18px_44px_rgba(15,23,42,0.06)]"
-                >
-                    <div className="relative flex min-h-[258px] items-center justify-center overflow-hidden rounded-[1.2rem] bg-[linear-gradient(135deg,#312e81_0%,#4f46e5_34%,#7c3aed_68%,#6366f1_100%)] px-8 py-10 text-center">
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.3),transparent_30%),radial-gradient(circle_at_80%_30%,rgba(255,255,255,0.18),transparent_26%),radial-gradient(circle_at_50%_100%,rgba(255,255,255,0.22),transparent_32%)]" />
-                      <div className="relative">
-                        <div className="text-sm font-medium uppercase tracking-[0.12em] text-white/75">
-                          {activeNav.feature.eyebrow}
-                        </div>
-                        <div className="mt-3 max-w-[10ch] text-5xl font-semibold tracking-tight text-white">
-                          {activeNav.feature.title}
+                  {activeNav.feature ? (
+                    <Link
+                      to={activeNav.feature.path}
+                      onClick={() => setActiveKey('')}
+                      className="group self-start rounded-[1.7rem] border border-slate-200/90 bg-white/90 p-3 shadow-[0_18px_44px_rgba(15,23,42,0.06)]"
+                    >
+                      <div className="relative flex min-h-[258px] items-center justify-center overflow-hidden rounded-[1.2rem] bg-[linear-gradient(135deg,#312e81_0%,#4f46e5_34%,#7c3aed_68%,#6366f1_100%)] px-8 py-10 text-center">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.3),transparent_30%),radial-gradient(circle_at_80%_30%,rgba(255,255,255,0.18),transparent_26%),radial-gradient(circle_at_50%_100%,rgba(255,255,255,0.22),transparent_32%)]" />
+                        <div className="relative">
+                          <div className="text-sm font-medium uppercase tracking-[0.12em] text-white/75">
+                            {activeNav.feature.eyebrow}
+                          </div>
+                          <div className="mt-3 max-w-[10ch] text-5xl font-semibold tracking-tight text-white">
+                            {activeNav.feature.title}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="flex items-center justify-between gap-4 px-3 pb-1 pt-4">
-                      <span className="text-[1.05rem] text-slate-700">
-                        {activeNav.feature.subtitle}
-                      </span>
-                      <span className="text-2xl text-slate-500 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                        {'>'}
-                      </span>
-                    </div>
-                  </Link>
+                      <div className="flex items-center justify-between gap-4 px-3 pb-1 pt-4">
+                        <span className="text-[1.05rem] text-slate-700">
+                          {activeNav.feature.subtitle}
+                        </span>
+                        <span className="text-2xl text-slate-500 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                          {'>'}
+                        </span>
+                      </div>
+                    </Link>
+                  ) : null}
                 </div>
               </div>
             ) : null}

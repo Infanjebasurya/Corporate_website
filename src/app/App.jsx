@@ -12,6 +12,8 @@ const AboutPage = lazy(() => import('../pages/about/AboutPage.jsx'))
 const ServicesPage = lazy(() => import('../pages/services/ServicesPage.jsx'))
 const ContactPage = lazy(() => import('../pages/contact/ContactPage.jsx'))
 const FaqPage = lazy(() => import('../pages/faq/FaqPage.jsx'))
+const BlogListPage = lazy(() => import('../pages/blog/BlogListPage.jsx'))
+const BlogDetailPage = lazy(() => import('../pages/blog/BlogDetailPage.jsx'))
 const TermsPage = lazy(() => import('../pages/terms/TermsPage.jsx'))
 const PrivacyPage = lazy(() => import('../pages/privacy/PrivacyPage.jsx'))
 const NotFoundPage = lazy(() => import('../pages/not-found/NotFoundPage.jsx'))
@@ -41,6 +43,8 @@ function AppRoutes() {
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/faq" element={<FaqPage />} />
+          <Route path="/blog" element={<BlogListPage />} />
+          <Route path="/blog/:slug" element={<BlogDetailPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="*" element={<NotFoundPage />} />
