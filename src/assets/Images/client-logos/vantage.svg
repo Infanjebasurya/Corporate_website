@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="120" viewBox="0 0 320 120">
+  <rect width="320" height="120" rx="20" fill="#ffffff"/>
+  <g fill="#0f172a">
+    <path d="M58 38h14l12 30 12-30h14L91 82H77L58 38z"/>
+    <text x="128" y="78" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="40" font-weight="800" fill="#0f172a" letter-spacing="1.2">VANTAGE</text>
+  </g>
+</svg>
+

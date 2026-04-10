@@ -133,11 +133,11 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div className="mt-6 rounded-2xl bg-slate-950 p-5 text-white">
-                  <div className="text-xs font-semibold uppercase tracking-[0.16em] text-white/60">
+                <div className="mt-6 rounded-2xl border border-indigo-100 bg-[linear-gradient(135deg,#eef4ff_0%,#ffffff_100%)] p-5 text-slate-900">
+                  <div className="text-xs font-semibold uppercase tracking-[0.16em] text-indigo-600">
                     Typical inquiry flow
                   </div>
-                  <div className="mt-3 space-y-2 text-sm text-white/78">
+                  <div className="mt-3 space-y-2 text-sm text-slate-600">
                     <p>1. Share the scope and timeline</p>
                     <p>2. Receive a focused recommendation</p>
                     <p>3. Start with a clear delivery plan</p>

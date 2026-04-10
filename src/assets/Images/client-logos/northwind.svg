@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="120" viewBox="0 0 320 120">
+  <rect width="320" height="120" rx="20" fill="#ffffff"/>
+  <g fill="none" stroke="#0f172a" stroke-width="6" stroke-linecap="round">
+    <path d="M70 82V38l28 44V38"/>
+    <path d="M112 82V38h22c12 0 20 9 20 22s-8 22-20 22h-22z"/>
+  </g>
+  <text x="174" y="78" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="34" font-weight="700" fill="#0f172a" letter-spacing="1.5">NORTHWIND</text>
+</svg>
+

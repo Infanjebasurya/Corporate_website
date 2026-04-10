@@ -6,10 +6,10 @@ import { href } from '../../router/useHashRoute.js'
 function Tier({ name, price, tagline, features, highlight }) {
   return (
     <div
-      className={`relative rounded-3xl border bg-white p-7 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:bg-slate-900/40 ${
+      className={`relative rounded-3xl border bg-white p-7 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
         highlight
-          ? 'border-indigo-300 ring-1 ring-indigo-200 dark:border-indigo-500/60 dark:ring-indigo-500/15'
-          : 'border-slate-200 dark:border-slate-800'
+          ? 'border-indigo-300 ring-1 ring-indigo-200'
+          : 'border-slate-200'
       }`}
     >
       {highlight ? (
@@ -21,24 +21,24 @@ function Tier({ name, price, tagline, features, highlight }) {
       <div className="flex items-start justify-between gap-4">
         <div>
           <h3 className="text-base font-semibold">{name}</h3>
-          <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
+          <p className="mt-1 text-sm text-slate-600">
             {tagline}
           </p>
         </div>
         <div className="text-right">
           <div className="text-3xl font-semibold tracking-tight">{price}</div>
-          <div className="text-xs text-slate-500 dark:text-slate-400">
+          <div className="text-xs text-slate-500">
             per project
           </div>
         </div>
       </div>
 
-      <div className="mt-6 h-px w-full bg-slate-200 dark:bg-slate-800" />
+      <div className="mt-6 h-px w-full bg-slate-200" />
 
-      <ul className="mt-6 space-y-2 text-sm text-slate-700 dark:text-slate-200">
+      <ul className="mt-6 space-y-2 text-sm text-slate-700">
         {features.map((f) => (
           <li key={f} className="flex items-start gap-2">
-            <span className="mt-1 inline-flex size-4 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-700 dark:bg-emerald-400/15 dark:text-emerald-300">
+            <span className="mt-1 inline-flex size-4 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-700">
               <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
                 <path
                   fill="currentColor"
@@ -57,7 +57,7 @@ function Tier({ name, price, tagline, features, highlight }) {
           className={
             highlight
               ? ''
-              : 'bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-white/90'
+              : 'bg-slate-950 hover:bg-slate-800'
           }
         >
           Get started
@@ -112,13 +112,13 @@ export default function ServicesPage() {
     <section>
       <Container className="py-14 sm:py-16">
         <Reveal>
-          <p className="text-xs font-semibold tracking-widest text-indigo-600 dark:text-indigo-400">
+          <p className="text-xs font-semibold tracking-widest text-indigo-600">
             SERVICES & PRICING
           </p>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
             Clear packages. Premium output.
           </h1>
-          <p className="mt-3 max-w-3xl text-sm text-slate-600 dark:text-slate-300">
+          <p className="mt-3 max-w-3xl text-sm text-slate-600">
             Choose a plan that fits your timeline and scope. We can also tailor
             a custom package—just contact us.
           </p>
@@ -132,13 +132,13 @@ export default function ServicesPage() {
           ))}
         </div>
 
-        <div className="mt-12 grid gap-6 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900/40 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
+        <div className="mt-12 grid gap-6 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
           <Reveal>
             <div>
               <h2 className="text-2xl font-semibold tracking-tight">
                 Need a custom quote?
               </h2>
-              <p className="mt-2 max-w-2xl text-sm text-slate-600 dark:text-slate-300">
+              <p className="mt-2 max-w-2xl text-sm text-slate-600">
                 Tell us your industry, your target customers, and the pages you
                 need. We’ll recommend the fastest path to a premium site.
               </p>

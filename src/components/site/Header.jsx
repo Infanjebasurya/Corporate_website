@@ -213,7 +213,8 @@ const accentClasses = {
   violet: 'border-violet-100 bg-violet-50 text-violet-700',
 }
 
-function DesktopNavLink({ label, isActive, onEnter }) {
+function DesktopNavLink({ label, isActive, onEnter, tone = 'dark' }) {
+  const isLight = tone === 'light'
   return (
     <button
       type="button"
@@ -221,8 +222,12 @@ function DesktopNavLink({ label, isActive, onEnter }) {
       onFocus={onEnter}
       className={`rounded-2xl px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.08em] transition ${
         isActive
-          ? 'bg-slate-100 text-slate-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]'
-          : 'text-slate-900 hover:bg-slate-50'
+          ? isLight
+            ? 'bg-white/10 text-white'
+            : 'bg-slate-100 text-slate-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]'
+          : isLight
+            ? 'text-white/90 hover:bg-white/10'
+            : 'text-slate-900 hover:bg-slate-50'
       }`}
       aria-expanded={isActive}
     >
@@ -231,7 +236,8 @@ function DesktopNavLink({ label, isActive, onEnter }) {
   )
 }
 
-function DesktopNavRoute({ label, path, onClick }) {
+function DesktopNavRoute({ label, path, onClick, tone = 'dark' }) {
+  const isLight = tone === 'light'
   return (
     <RouterNavLink
       to={path}
@@ -239,8 +245,12 @@ function DesktopNavRoute({ label, path, onClick }) {
       className={({ isActive }) =>
         `rounded-2xl px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.08em] transition ${
           isActive
-            ? 'bg-slate-100 text-slate-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]'
-            : 'text-slate-900 hover:bg-slate-50'
+            ? isLight
+              ? 'bg-white/10 text-white'
+              : 'bg-slate-100 text-slate-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]'
+            : isLight
+              ? 'text-white/90 hover:bg-white/10'
+              : 'text-slate-900 hover:bg-slate-50'
         }`
       }
     >
@@ -249,14 +259,19 @@ function DesktopNavRoute({ label, path, onClick }) {
   )
 }
 
-function MobileNavLink({ label, path, onClick }) {
+function MobileNavLink({ label, path, onClick, tone = 'dark' }) {
+  const isLight = tone === 'light'
   return (
     <RouterNavLink
       to={path}
       onClick={onClick}
       className={({ isActive }) =>
         `rounded-2xl px-4 py-3 text-sm font-medium transition ${
-          isActive ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100'
+          isActive
+            ? 'bg-indigo-600 text-white'
+            : isLight
+              ? 'text-white/85 hover:bg-white/10'
+              : 'text-slate-700 hover:bg-slate-100'
         }`
       }
     >
@@ -265,14 +280,19 @@ function MobileNavLink({ label, path, onClick }) {
   )
 }
 
-function HeaderAction({ to, dark = false, children }) {
+function HeaderAction({ to, dark = false, children, tone = 'dark' }) {
+  const isLight = tone === 'light'
   return (
     <Link
       to={to}
       className={`inline-flex items-center justify-center rounded-full px-6 py-2.5 text-base font-medium transition ${
         dark
-          ? 'bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.16),_rgba(255,255,255,0.03)_34%),linear-gradient(180deg,#1e293b_0%,#0f172a_100%)] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.24),0_12px_24px_rgba(15,23,42,0.12)] hover:brightness-105'
-          : 'border border-slate-200/80 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] text-slate-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.98),0_8px_18px_rgba(15,23,42,0.05)] hover:bg-white'
+          ? isLight
+            ? 'bg-white/10 text-white hover:bg-white/15'
+            : 'bg-[linear-gradient(180deg,#5b39f6_0%,#4338ca_100%)] text-white shadow-[0_12px_24px_rgba(91,57,246,0.2)] hover:brightness-105'
+          : isLight
+            ? 'border border-white/18 bg-white/6 text-white hover:bg-white/10'
+            : 'border border-slate-200/80 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] text-slate-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.98),0_8px_18px_rgba(15,23,42,0.05)] hover:bg-white'
       }`}
     >
       {children}
@@ -284,11 +304,35 @@ export default function Header() {
   const [open, setOpen] = useState(false)
   const location = useLocation()
   const [activeKey, setActiveKey] = useState('')
+  const [overlay, setOverlay] = useState(false)
+
+  const isBlogRoute = location.pathname === '/blog' || location.pathname.startsWith('/blog/')
 
   useEffect(() => {
     setActiveKey('')
     setOpen(false)
   }, [location.pathname])
+
+  useEffect(() => {
+    if (!isBlogRoute) {
+      setOverlay(false)
+      return
+    }
+
+    const update = () => {
+      // Overlay only near the top, but use hysteresis to avoid flicker.
+      const y = window.scrollY
+      setOverlay((prev) => {
+        if (prev && y > 88) return false
+        if (!prev && y < 20) return true
+        return prev
+      })
+    }
+
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    return () => window.removeEventListener('scroll', update)
+  }, [isBlogRoute])
 
   useEffect(() => {
     if (!open) return
@@ -303,7 +347,7 @@ export default function Header() {
     navItems.find((item) => item.key === activeKey && !item.direct) ?? null
 
   return (
-    <header className="sticky top-0 z-50 pt-4 sm:pt-5">
+    <header className={`${isBlogRoute ? 'fixed inset-x-0 top-0' : 'sticky top-0'} z-50 pt-4 sm:pt-5`}>
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-xl focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:shadow-sm focus:outline-none"
@@ -313,9 +357,15 @@ export default function Header() {
 
       <Container className="relative max-w-7xl">
         <div className="hidden md:block" onMouseLeave={() => setActiveKey('')}>
-          <div className="overflow-hidden rounded-[2.15rem] border border-slate-200/80 bg-[linear-gradient(180deg,rgba(248,250,252,0.96)_0%,rgba(241,245,249,0.9)_100%)] shadow-[0_18px_52px_rgba(15,23,42,0.08),inset_0_1px_0_rgba(255,255,255,0.7)] backdrop-blur-xl">
+          <div
+            className={`overflow-hidden rounded-[2.15rem] border backdrop-blur-xl ${
+              overlay
+                ? 'border-white/14 bg-black/18 shadow-none'
+                : 'border-slate-200/80 bg-[linear-gradient(180deg,rgba(248,250,252,0.96)_0%,rgba(241,245,249,0.9)_100%)] shadow-[0_18px_52px_rgba(15,23,42,0.08),inset_0_1px_0_rgba(255,255,255,0.7)]'
+            }`}
+          >
             <div className="flex items-center justify-between gap-6 px-6 py-2.5 lg:px-10 lg:py-3">
-              <Logo />
+              <Logo tone={overlay ? 'light' : 'dark'} />
 
               <nav className="flex items-center gap-2" aria-label="Primary">
                 {navItems.map((item) => (
@@ -325,6 +375,7 @@ export default function Header() {
                       label={item.label}
                       path={item.path}
                       onClick={() => setActiveKey('')}
+                      tone={overlay ? 'light' : 'dark'}
                     />
                   ) : (
                     <DesktopNavLink
@@ -332,21 +383,28 @@ export default function Header() {
                       label={item.label}
                       isActive={activeKey === item.key}
                       onEnter={() => setActiveKey(item.key)}
+                      tone={overlay ? 'light' : 'dark'}
                     />
                   )
                 ))}
               </nav>
 
               <div className="flex items-center gap-2.5">
-                <HeaderAction to="/contact" dark>
+                <HeaderAction to="/contact" dark tone={overlay ? 'light' : 'dark'}>
                   Get a quote
                 </HeaderAction>
-                <HeaderAction to="/services">View pricing</HeaderAction>
+                <HeaderAction to="/services" dark={overlay} tone={overlay ? 'light' : 'dark'}>
+                  View pricing
+                </HeaderAction>
               </div>
             </div>
 
             {activeNav ? (
-              <div className="border-t border-slate-200/80 bg-slate-50/80 px-8 py-10 lg:px-12 lg:py-12">
+              <div
+                className={`border-t px-8 py-10 lg:px-12 lg:py-12 ${
+                  overlay ? 'border-white/12 bg-black/28' : 'border-slate-200/80 bg-slate-50/80'
+                }`}
+              >
                 <div className={`grid gap-10 ${activeNav.feature ? 'xl:grid-cols-[1.5fr_0.88fr]' : ''}`}>
                   <div className="grid gap-10 md:grid-cols-2">
                     {activeNav.sections.map((section) => (
@@ -392,13 +450,13 @@ export default function Header() {
                       onClick={() => setActiveKey('')}
                       className="group self-start rounded-[1.7rem] border border-slate-200/90 bg-white/90 p-3 shadow-[0_18px_44px_rgba(15,23,42,0.06)]"
                     >
-                      <div className="relative flex min-h-[258px] items-center justify-center overflow-hidden rounded-[1.2rem] bg-[linear-gradient(135deg,#312e81_0%,#4f46e5_34%,#7c3aed_68%,#6366f1_100%)] px-8 py-10 text-center">
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.3),transparent_30%),radial-gradient(circle_at_80%_30%,rgba(255,255,255,0.18),transparent_26%),radial-gradient(circle_at_50%_100%,rgba(255,255,255,0.22),transparent_32%)]" />
+                      <div className="relative flex min-h-[258px] items-center justify-center overflow-hidden rounded-[1.2rem] bg-[linear-gradient(135deg,#eef4ff_0%,#dbeafe_34%,#e9d5ff_68%,#ffffff_100%)] px-8 py-10 text-center">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.16),transparent_30%),radial-gradient(circle_at_80%_30%,rgba(59,130,246,0.12),transparent_26%),radial-gradient(circle_at_50%_100%,rgba(168,85,247,0.12),transparent_32%)]" />
                         <div className="relative">
-                          <div className="text-sm font-medium uppercase tracking-[0.12em] text-white/75">
+                          <div className="text-sm font-medium uppercase tracking-[0.12em] text-indigo-700/80">
                             {activeNav.feature.eyebrow}
                           </div>
-                          <div className="mt-3 max-w-[10ch] text-5xl font-semibold tracking-tight text-white">
+                          <div className="mt-3 max-w-[10ch] text-5xl font-semibold tracking-tight text-slate-950">
                             {activeNav.feature.title}
                           </div>
                         </div>
@@ -419,12 +477,22 @@ export default function Header() {
           </div>
         </div>
 
-        <div className="rounded-[1.6rem] border border-slate-200/80 bg-[linear-gradient(180deg,rgba(248,250,252,0.96)_0%,rgba(241,245,249,0.9)_100%)] p-4 shadow-[0_14px_40px_rgba(15,23,42,0.08)] backdrop-blur md:hidden">
+        <div
+          className={`rounded-[1.6rem] border p-4 backdrop-blur md:hidden ${
+            overlay
+              ? 'border-white/14 bg-black/18 shadow-none'
+              : 'border-slate-200/80 bg-[linear-gradient(180deg,rgba(248,250,252,0.96)_0%,rgba(241,245,249,0.9)_100%)] shadow-[0_14px_40px_rgba(15,23,42,0.08)]'
+          }`}
+        >
           <div className="flex items-center justify-between gap-4">
-            <Logo />
+            <Logo tone={overlay ? 'light' : 'dark'} />
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white p-3 text-slate-700 shadow-sm transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+              className={`inline-flex items-center justify-center rounded-2xl border p-3 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+                overlay
+                  ? 'border-white/16 bg-white/10 text-white hover:bg-white/15'
+                  : 'border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50'
+              }`}
               aria-label="Open menu"
               aria-expanded={open}
               onClick={() => setOpen((value) => !value)}
@@ -443,7 +511,7 @@ export default function Header() {
           </div>
 
           {open ? (
-            <div className="mt-4 border-t border-slate-200 pt-4 motion-safe:animate-[fadeIn_.25s_ease-out]">
+            <div className={`mt-4 border-t pt-4 motion-safe:animate-[fadeIn_.25s_ease-out] ${overlay ? 'border-white/12' : 'border-slate-200'}`}>
               <div className="flex flex-col gap-2">
                 {mobileLinks.map((item) => (
                   <MobileNavLink
@@ -451,14 +519,17 @@ export default function Header() {
                     label={item.label}
                     path={item.path}
                     onClick={() => setOpen(false)}
+                    tone={overlay ? 'light' : 'dark'}
                   />
                 ))}
               </div>
               <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <HeaderAction to="/contact" dark>
+                <HeaderAction to="/contact" dark tone={overlay ? 'light' : 'dark'}>
                   Get a quote
                 </HeaderAction>
-                <HeaderAction to="/services">View pricing</HeaderAction>
+                <HeaderAction to="/services" tone={overlay ? 'light' : 'dark'}>
+                  View pricing
+                </HeaderAction>
               </div>
             </div>
           ) : null}

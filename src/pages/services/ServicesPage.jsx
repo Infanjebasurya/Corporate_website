@@ -49,7 +49,7 @@ function Tier({ name, price, tagline, features, highlight }) {
         <Button
           as={Link}
           to="/contact"
-          className={highlight ? '' : 'bg-slate-900 hover:bg-slate-800'}
+          className={highlight ? '' : 'bg-slate-950 hover:bg-slate-800'}
         >
           Get started
         </Button>

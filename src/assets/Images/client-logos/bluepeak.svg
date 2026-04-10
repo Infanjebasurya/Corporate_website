@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="120" viewBox="0 0 320 120">
+  <rect width="320" height="120" rx="20" fill="#ffffff"/>
+  <path d="M54 78 78 40l24 38H54z" fill="#0f172a"/>
+  <path d="M66 78 78 58l12 20H66z" fill="#60a5fa"/>
+  <text x="126" y="78" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="36" font-weight="800" fill="#0f172a" letter-spacing="1.2">BLUEPEAK</text>
+</svg>
+

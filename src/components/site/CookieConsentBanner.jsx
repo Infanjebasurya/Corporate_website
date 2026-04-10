@@ -26,6 +26,12 @@ function persistConsent(choice) {
   } catch {
     // Ignore storage errors when fallback storage is unavailable.
   }
+
+  try {
+    window.dispatchEvent(new CustomEvent('cookieconsentchange', { detail: { choice } }))
+  } catch {
+    // Ignore if CustomEvent is unavailable.
+  }
 }
 
 export default function CookieConsentBanner() {
@@ -54,12 +60,9 @@ export default function CookieConsentBanner() {
   }, [])
 
   function handleChoice(choice) {
-    persistConsent(choice)
+    const normalized = choice === 'essential' ? 'rejected' : choice
+    persistConsent(normalized)
     setVisible(false)
-  }
-
-  function handleDismiss() {
-    handleChoice('essential')
   }
 
   if (!visible) return null
@@ -85,8 +88,8 @@ export default function CookieConsentBanner() {
             </div>
 
             <p className="max-w-[640px] text-[13px] leading-[1.5] font-medium tracking-[-0.01em] text-[#6e7198] sm:text-[14px] sm:leading-[1.45] lg:text-[15px]">
-              Our website use cookies. By continuing navigating, we assume your
-              permission to deploy cookies as detailed in our{' '}
+              We use cookies to improve the site experience. Choose Accept to
+              allow cookies, or Reject to allow only essential cookies. See our{' '}
               <Link
                 to="/privacy"
                 className="font-semibold text-[#666a96] underline decoration-[#d5d7ef] underline-offset-4 transition hover:text-[#4c39f6]"
@@ -100,23 +103,17 @@ export default function CookieConsentBanner() {
           <div className="flex items-center justify-end gap-2">
             <button
               type="button"
+              className="inline-flex min-h-10 items-center justify-center rounded-full border border-[#e6e8fb] bg-[#fbfbff] px-5 text-[13px] font-semibold text-[#2b2f6f] shadow-[0_10px_18px_rgba(15,23,42,0.04)] transition hover:bg-white sm:min-h-11 sm:px-7 sm:text-[13px]"
+              onClick={() => handleChoice('rejected')}
+            >
+              Reject cookies
+            </button>
+            <button
+              type="button"
               className="inline-flex min-h-10 items-center justify-center rounded-full bg-[linear-gradient(90deg,#5b39f6_0%,#4236f2_100%)] px-5 text-[13px] font-semibold text-white shadow-[0_14px_28px_rgba(91,57,246,0.18)] transition hover:brightness-105 sm:min-h-11 sm:px-7 sm:text-[13px] lg:min-w-[210px]"
               onClick={() => handleChoice('accepted')}
             >
               Accept cookies
-            </button>
-            <button
-              type="button"
-              aria-label="Close cookie banner"
-              className="inline-flex size-9 items-center justify-center rounded-full text-[#24185f] transition hover:bg-slate-50 sm:size-10"
-              onClick={handleDismiss}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  fill="currentColor"
-                  d="M18.3 5.71 12 12l6.3 6.29-1.42 1.42L10.59 13.4 4.29 19.71 2.87 18.29 9.17 12 2.87 5.71 4.29 4.29l6.3 6.3 6.29-6.3z"
-                />
-              </svg>
             </button>
           </div>
         </div>

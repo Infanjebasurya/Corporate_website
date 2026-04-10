@@ -1,5 +1,9 @@
-import officeImage from '../assets/Images/deemar-people-335298_1920.jpg'
-import teamImage from '../assets/Images/julientromeur-business-4328465_1920.jpg'
+﻿import blogImageOne from '../assets/Images/Blogs/Blog-1.jpg'
+import blogImageTwo from '../assets/Images/Blogs/Blog-2.png'
+import blogImageThree from '../assets/Images/Blogs/Blog-3.jpg'
+import blogImageFour from '../assets/Images/Blogs/Blog-4.png'
+import blogImageFive from '../assets/Images/Blogs/Blog-5.jpg'
+import blogImageSix from '../assets/Images/Blogs/Blog-6.jpg'
 
 export const blogPosts = [
   {
@@ -14,7 +18,7 @@ export const blogPosts = [
     role: 'Creative Director',
     date: 'April 2, 2026',
     readTime: '6 min read',
-    image: officeImage,
+    image: blogImageOne,
     featured: true,
     sections: [
       {
@@ -51,7 +55,7 @@ export const blogPosts = [
     role: 'Content Strategist',
     date: 'March 21, 2026',
     readTime: '5 min read',
-    image: teamImage,
+    image: blogImageTwo,
     sections: [
       {
         heading: 'Lead with the business problem you solve',
@@ -85,7 +89,7 @@ export const blogPosts = [
     role: 'Frontend Engineer',
     date: 'March 8, 2026',
     readTime: '7 min read',
-    image: officeImage,
+    image: blogImageThree,
     sections: [
       {
         heading: 'Separate shells, pages, and primitives',
@@ -103,6 +107,112 @@ export const blogPosts = [
         heading: 'Design consistency is a technical advantage',
         body: [
           'When spacing, typography, and card patterns are reused well, feature work gets faster. Teams spend less time inventing new structures and more time improving the message and the experience.',
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'pricing-pages-that-feel-premium',
+    category: 'Positioning',
+    title: 'Pricing pages that feel premium (without looking expensive)',
+    excerpt:
+      'A premium pricing page does not hide information. It guides decision-making with calm structure, clear tradeoffs, and proof that the company understands the buyer.',
+    description:
+      'How to present packages, boundaries, and next steps in a way that increases trust and reduces back-and-forth.',
+    author: 'Ishita Rao',
+    role: 'Growth Lead',
+    date: 'February 24, 2026',
+    readTime: '6 min read',
+    image: blogImageFour,
+    sections: [
+      {
+        heading: 'Show ranges, not surprises',
+        body: [
+          'Buyers rarely need every detail on the first read, but they do need confidence that the pricing is real. Use a clear starting point, a typical range, and what influences the final quote.',
+          'Surprises create friction. Clarity creates momentum.',
+        ],
+      },
+      {
+        heading: 'Package with outcomes',
+        body: [
+          'Instead of listing features, name the outcome each plan is designed to deliver. This keeps the conversation anchored to value, not line-items.',
+          'When packages are described as â€œwho this is forâ€ plus â€œwhat you getâ€, the page feels more professional and easier to scan.',
+        ],
+      },
+      {
+        heading: 'End with a confident next step',
+        body: [
+          'Your CTA should match the buyerâ€™s readiness. Offer one primary step (book a call / request a quote), and keep secondary actions unobtrusive (download a PDF / see examples).',
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'turning-testimonials-into-proof',
+    category: 'Trust',
+    title: 'Turning testimonials into proof people actually believe',
+    excerpt:
+      'A testimonial is strongest when it reads like a specific outcome, not a compliment. The goal is to reduce doubt with details that feel verifiable.',
+    description:
+      'A lightweight system for social proof that looks corporate, stays consistent, and supports conversions across the site.',
+    author: 'Karan Mehta',
+    role: 'Brand Designer',
+    date: 'February 10, 2026',
+    readTime: '5 min read',
+    image: blogImageFive,
+    sections: [
+      {
+        heading: 'Use context first',
+        body: [
+          'Add a small line that frames who the customer is and what changed. This helps visitors map the story to their own situation quickly.',
+        ],
+      },
+      {
+        heading: 'Prefer numbers and time',
+        body: [
+          'Even one number makes the story stronger: weeks saved, time to launch, reduction in support tickets, increased response rate.',
+          'If you do not have numbers, use â€œbefore and afterâ€ language with concrete situations.',
+        ],
+      },
+      {
+        heading: 'Design for scanning',
+        body: [
+          'On a corporate site, testimonials should be readable fast: one quote, one name, one role, one small rating or tag. Keep the layout consistent across cards.',
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'hero-sections-that-earn-scrolls',
+    category: 'Design Systems',
+    title: 'Hero sections that earn the next scroll',
+    excerpt:
+      'A strong hero does not just look good. It answers the first three questions a buyer has: what it is, who it is for, and why they should trust it.',
+    description:
+      'A practical structure for corporate hero sections that stays readable on mobile and feels premium without heavy effects.',
+    author: 'Meera Nair',
+    role: 'Product Marketer',
+    date: 'January 28, 2026',
+    readTime: '7 min read',
+    image: blogImageSix,
+    sections: [
+      {
+        heading: 'Clarity beats cleverness',
+        body: [
+          'A headline should be clear enough that a new visitor can repeat it back. Avoid jargon that forces people to interpret.',
+          'Use a supportive subheading that explains the benefit and the customer type in one sentence.',
+        ],
+      },
+      {
+        heading: 'Proof comes earlier than you think',
+        body: [
+          'Add one small proof row above the fold: clients, security badges, uptime, ratings, or a short metric. It helps buyers relax.',
+        ],
+      },
+      {
+        heading: 'Keep the CTA calm',
+        body: [
+          'One primary button, one secondary link. The goal is to feel confident, not loud.',
         ],
       },
     ],

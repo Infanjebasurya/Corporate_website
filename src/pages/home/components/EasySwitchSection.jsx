@@ -37,7 +37,7 @@ function ShowcaseCard({ title, video, tone = 'sand', layout = 'bottom-left', wid
         </video>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.38),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.18),transparent_34%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.06)_0%,rgba(255,255,255,0.02)_35%,rgba(255,255,255,0.1)_100%)] transition-opacity duration-300 group-hover:opacity-0" />
-        <div className="absolute inset-x-0 bottom-0 h-[44%] bg-[linear-gradient(180deg,rgba(15,23,42,0)_0%,rgba(15,23,42,0.18)_40%,rgba(15,23,42,0.58)_100%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-x-0 bottom-0 h-[44%] bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(15,23,42,0.06)_40%,rgba(15,23,42,0.28)_100%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         <div className={`absolute inset-0 flex p-5 sm:p-6 opacity-0 transition-all duration-300 group-hover:opacity-100 ${positions[layout]}`}>
           <p className="max-w-[18ch] translate-y-3 text-[1.05rem] leading-[1.45] text-white transition-transform duration-300 group-hover:translate-y-0 sm:text-[1.12rem]">
             {title}
@@ -55,12 +55,12 @@ export default function EasySwitchSection() {
         <div className="grid gap-14 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-start">
           <Reveal>
             <div className="max-w-xl">
-              <h2 className="text-5xl font-semibold tracking-tight text-white sm:text-[4.9rem] sm:leading-[0.94]">
+              <h2 className="text-5xl font-semibold tracking-tight text-slate-950 sm:text-[4.9rem] sm:leading-[0.94]">
                 Easy switch.
                 <br />
                 No hitch.
               </h2>
-              <p className="mt-10 max-w-[33rem] text-[1.02rem] leading-[1.95] text-slate-200">
+              <p className="mt-10 max-w-[33rem] text-[1.02rem] leading-[1.95] text-slate-600">
                 Switching to Kula is structured, secure, and designed to keep
                 your hiring moving from day one. Your open roles continue
                 uninterrupted, your data transfers seamlessly, and your
