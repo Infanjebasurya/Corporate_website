@@ -26,19 +26,19 @@ function InsightCard({ title, description, to }) {
 export default function FooterTransitionSection() {
   return (
     <section className="relative overflow-hidden py-10 sm:py-14">
-      <div className="absolute inset-x-0 top-0 -z-10 h-full bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.16),transparent_40%),linear-gradient(180deg,rgba(15,23,42,0)_0%,rgba(255,255,255,0.08)_24%,rgba(255,255,255,0.22)_100%)]" />
+      <div className="absolute inset-x-0 top-0 -z-10 h-full bg-[radial-gradient(circle_at_top,rgba(99,102,241,0.12),transparent_40%),linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.85)_24%,rgba(248,250,252,0.95)_100%)]" />
       <Container>
         <Reveal>
-          <div className="rounded-[2rem] border border-white/15 bg-white/10 p-8 shadow-[0_24px_60px_rgba(15,23,42,0.12)] backdrop-blur sm:p-10">
+          <div className="rounded-[2rem] border border-white/80 bg-white/88 p-8 shadow-[0_24px_60px_rgba(15,23,42,0.08)] backdrop-blur sm:p-10">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-2xl">
-                <div className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-300">
+                <div className="text-xs font-semibold uppercase tracking-[0.22em] text-indigo-600">
                   Beyond the homepage
                 </div>
-                <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+                <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
                   Add depth to the brand with content that feels considered
                 </h2>
-                <p className="mt-4 text-base leading-8 text-slate-200">
+                <p className="mt-4 text-base leading-8 text-slate-600">
                   Strong service websites do more than introduce the business. They answer
                   questions, share perspective, and give visitors a reason to trust the team
                   behind the work.

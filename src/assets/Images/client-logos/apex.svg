@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="120" viewBox="0 0 320 120">
+  <rect width="320" height="120" rx="20" fill="#ffffff"/>
+  <g fill="#0f172a">
+    <path d="M66 82 48 38h14l4 12h18l4-12h14L84 82H66zm5-22h8l-4-12-4 12z"/>
+    <text x="118" y="78" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="44" font-weight="700" letter-spacing="2">APEX</text>
+  </g>
+</svg>
+
