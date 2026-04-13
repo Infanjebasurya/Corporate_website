@@ -53,8 +53,11 @@ function FooterLink({ label, path }) {
 
 function FooterGlow({ intensity }) {
   const clamped = Math.max(0, Math.min(1, intensity))
-  // Match the reference HTML: base scale(1.5) at max intensity.
-  const scale = 1 + clamped * 0.5
+
+  // Small to big: starts at 0 (invisible), grows to full size as you scroll down
+  const scale = clamped
+  // Opacity also fades in for a more dramatic bloom effect
+  const opacity = clamped
 
   return (
     <div
@@ -65,70 +68,73 @@ function FooterGlow({ intensity }) {
         className="relative mx-auto -mb-20 w-full max-w-[1200px] scale-x-[200%] scale-y-[300%] md:scale-x-[100%] md:scale-y-[90%]"
         style={{
           transformOrigin: 'center bottom',
-          opacity: 1,
         }}
       >
         <div
           style={{
             transform: `scale(${scale})`,
+            opacity: opacity,
             transformOrigin: 'center bottom',
-            transition: 'transform 140ms ease',
+            transition: 'transform 140ms ease, opacity 140ms ease',
           }}
         >
-        <svg
-          width="2292"
-          height="833"
-          viewBox="0 0 2292 833"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-auto"
-        >
-          <g clipPath="url(#clip0_footer)">
-            <g filter="url(#filter0_footer)">
-              <path
-                d="M1113.5 40C502.673 39.9999 40 793 40 793H2252C2252 793 1724.33 40 1113.5 40Z"
-                fill="url(#paint0_footer)"
-              />
+          <svg
+            width="2292"
+            height="833"
+            viewBox="0 0 2292 833"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-auto"
+          >
+            <g clipPath="url(#clip0_footer)">
+              <g filter="url(#filter0_footer)">
+                <path
+                  d="M1113.5 40C502.673 39.9999 40 793 40 793H2252C2252 793 1724.33 40 1113.5 40Z"
+                  fill="url(#paint0_footer)"
+                />
+              </g>
             </g>
-          </g>
-          <defs>
-            <filter
-              id="filter0_footer"
-              x="-10"
-              y="-10"
-              width="2312"
-              height="853"
-              filterUnits="userSpaceOnUse"
-              colorInterpolationFilters="sRGB"
-            >
-              <feFlood floodOpacity="0" result="BackgroundImageFix" />
-              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-              <feGaussianBlur stdDeviation="25" result="effect1_foregroundBlur" />
-            </filter>
-            <radialGradient
-              id="paint0_footer"
-              cx="0"
-              cy="0"
-              r="1"
-              gradientTransform="matrix(0 -1256.51 2148.88 -11.8434 1146 1272)"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop offset="0.327754" stopColor="#F9730C" />
-              <stop offset="0.423421" stopColor="#FFA336" />
-              <stop offset="0.536751" stopColor="#F0D5BA" />
-              <stop offset="0.635122" stopColor="#CBDBFF" />
-              <stop offset="1" stopColor="#FAFAFA" stopOpacity="0" />
-            </radialGradient>
-            <clipPath id="clip0_footer">
-              <rect width="2292" height="833" fill="white" />
-            </clipPath>
-          </defs>
-        </svg>
+            <defs>
+              <filter
+                id="filter0_footer"
+                x="-10"
+                y="-10"
+                width="2312"
+                height="853"
+                filterUnits="userSpaceOnUse"
+                colorInterpolationFilters="sRGB"
+              >
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                <feGaussianBlur stdDeviation="25" result="effect1_foregroundBlur" />
+              </filter>
+              <radialGradient
+                id="paint0_footer"
+                cx="0"
+                cy="0"
+                r="1"
+                gradientTransform="matrix(0 -1256.51 2148.88 -11.8434 1146 1272)"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop offset="0.327754" stopColor="#F9730C" />
+                <stop offset="0.423421" stopColor="#FFA336" />
+                <stop offset="0.536751" stopColor="#F0D5BA" />
+                <stop offset="0.635122" stopColor="#CBDBFF" />
+                <stop offset="1" stopColor="#FAFAFA" stopOpacity="0" />
+              </radialGradient>
+              <clipPath id="clip0_footer">
+                <rect width="2292" height="833" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
         </div>
       </div>
     </div>
   )
 }
+
+
+
 
 function FooterBottom({ children, className = '', reveal }) {
   if (reveal) {
@@ -147,7 +153,7 @@ export default function Footer({ onHeightChange, reveal = false, className = '' 
     [],
   )
 
-  const [glowIntensity, setGlowIntensity] = useState(1)
+  const [glowIntensity, setGlowIntensity] = useState(0)
 
   useEffect(() => {
     if (!onHeightChange) return
@@ -164,8 +170,8 @@ export default function Footer({ onHeightChange, reveal = false, className = '' 
   }, [onHeightChange])
 
   useEffect(() => {
-    const targetRef = { current: 1 }
-    const currentRef = { current: 1 }
+    const targetRef = { current: 0 }
+    const currentRef = { current: 0 }
     let rafId = 0
 
     function computeTarget() {
@@ -174,8 +180,8 @@ export default function Footer({ onHeightChange, reveal = false, className = '' 
       const scrollHeight = doc.scrollHeight - doc.clientHeight
       const progress = scrollHeight > 0 ? scrollTop / scrollHeight : 0
 
-      // Scroll down reduces the glow, scroll up increases it.
-      targetRef.current = 1 - Math.max(0, Math.min(1, progress))
+      // Small to big: scroll down → intensity increases → glow grows
+      targetRef.current = Math.max(0, Math.min(1, progress))
     }
 
     function tick() {

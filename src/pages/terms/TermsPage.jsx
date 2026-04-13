@@ -4,12 +4,12 @@ import PageHero from '../../components/ui/PageHero.jsx'
 import Reveal from '../../components/ui/Reveal.jsx'
 
 const AnimatedIcon = ({ isOpen }) => (
-  <div className={`relative size-10 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}>
+  <div className={`relative size-10 transition-transform duration-500 ${isOpen ? 'rotate-45' : ''}`}>
     <div
-      className={`absolute left-1/2 top-1/2 h-0.5 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-400 transition-all duration-300 ${isOpen ? 'scale-x-0' : 'scale-x-100'}`}
+      className={`absolute left-1/2 top-1/2 h-0.5 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-400 transition-all duration-500 ${isOpen ? 'scale-x-0' : 'scale-x-100'}`}
     />
     <div
-      className={`absolute left-1/2 top-1/2 h-4 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-400 transition-all duration-300 ${isOpen ? 'scale-y-0' : 'scale-y-100'}`}
+      className={`absolute left-1/2 top-1/2 h-4 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-400 transition-all duration-500 ${isOpen ? 'scale-y-0' : 'scale-y-100'}`}
     />
   </div>
 )
@@ -33,9 +33,9 @@ function Section({ title, children, category = 'Terms', defaultOpen = false }) {
   }, [open, children])
 
   return (
-    <div className="group transform-gpu overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,250,252,0.96)_100%)] shadow-[0_18px_40px_rgba(15,23,42,0.08)] transition-all duration-400 hover:-translate-y-1 hover:scale-[1.01] hover:border-indigo-200 hover:shadow-[0_24px_52px_rgba(99,102,241,0.12)]">
+    <div className="group transform-gpu overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,250,252,0.96)_100%)] shadow-[0_18px_40px_rgba(15,23,42,0.08)] transition-all duration-500 ease-out hover:-translate-y-1 hover:scale-[1.01] hover:border-indigo-200 hover:shadow-[0_24px_52px_rgba(99,102,241,0.12)]">
       <div
-        className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-all duration-300 hover:bg-slate-50"
+        className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-all duration-500 hover:bg-slate-50"
         onMouseEnter={supportsHover ? () => setOpen(true) : undefined}
         onMouseLeave={supportsHover ? () => setOpen(false) : undefined}
         onClick={supportsHover ? undefined : () => setOpen((v) => !v)}
@@ -44,10 +44,10 @@ function Section({ title, children, category = 'Terms', defaultOpen = false }) {
         aria-expanded={open}
       >
         <div className="flex-1">
-          <span className="mb-2 inline-block rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-indigo-600 transition-all duration-300 group-hover:border-indigo-300 group-hover:bg-indigo-100">
+          <span className="mb-2 inline-block rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-indigo-600 transition-all duration-500 group-hover:border-indigo-300 group-hover:bg-indigo-100">
             {category}
           </span>
-          <span className="block text-base font-semibold tracking-tight text-slate-950 transition-colors duration-300 group-hover:text-indigo-600">
+          <span className="block text-base font-semibold tracking-tight text-slate-950 transition-colors duration-500 group-hover:text-indigo-600">
             {title}
           </span>
         </div>
@@ -55,11 +55,14 @@ function Section({ title, children, category = 'Terms', defaultOpen = false }) {
       </div>
 
       <div
-        style={{ height: `${height}px` }}
-        className="overflow-hidden transition-all duration-400 ease-out"
+        style={{ 
+          height: `${height}px`,
+          transition: 'height 500ms cubic-bezier(0.4, 0, 0.2, 1)'
+        }}
+        className="overflow-hidden"
       >
         <div ref={contentRef} className="px-6 pb-6">
-          <div className="border-t border-slate-200 pt-4 text-sm leading-7 text-slate-600">
+          <div className="border-t border-slate-200 pt-4 text-sm leading-7 text-slate-600 transition-all duration-500">
             {children}
           </div>
         </div>

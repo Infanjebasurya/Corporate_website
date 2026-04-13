@@ -7,9 +7,9 @@ import Reveal from '../../components/ui/Reveal.jsx'
 
 // Animated plus/minus icon component
 const AnimatedIcon = ({ isOpen }) => (
-  <div className={`relative size-10 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}>
-    <div className={`absolute left-1/2 top-1/2 h-0.5 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-400 transition-all duration-300 ${isOpen ? 'scale-x-0' : 'scale-x-100'}`} />
-    <div className={`absolute left-1/2 top-1/2 h-4 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-400 transition-all duration-300 ${isOpen ? 'scale-y-0' : 'scale-y-100'}`} />
+  <div className={`relative size-10 transition-transform duration-500 ${isOpen ? 'rotate-45' : ''}`}>
+    <div className={`absolute left-1/2 top-1/2 h-0.5 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-400 transition-all duration-500 ${isOpen ? 'scale-x-0' : 'scale-x-100'}`} />
+    <div className={`absolute left-1/2 top-1/2 h-4 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-400 transition-all duration-500 ${isOpen ? 'scale-y-0' : 'scale-y-100'}`} />
   </div>
 );
 
@@ -32,18 +32,18 @@ function Item({ q, a, category, index }) {
       className="group opacity-0 animate-fadeInUp"
       style={{ animationDelay: `${index * 0.05}s`, animationFillMode: 'forwards' }}
     >
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,250,252,0.96)_100%)] backdrop-blur-sm shadow-[0_18px_40px_rgba(15,23,42,0.08)] transition-all duration-400 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-[0_24px_52px_rgba(99,102,241,0.12)]">
+      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,250,252,0.96)_100%)] backdrop-blur-sm shadow-[0_18px_40px_rgba(15,23,42,0.08)] transition-all duration-500 ease-out hover:-translate-y-1 hover:border-indigo-200 hover:shadow-[0_24px_52px_rgba(99,102,241,0.12)]">
         <button
           type="button"
-          className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-all duration-300 hover:bg-slate-50"
+          className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-all duration-500 hover:bg-slate-50"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
         >
           <div className="flex-1">
-            <span className="mb-2 inline-block rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-indigo-600 transition-all duration-300 group-hover:border-indigo-300 group-hover:bg-indigo-100">
+            <span className="mb-2 inline-block rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-indigo-600 transition-all duration-500 group-hover:border-indigo-300 group-hover:bg-indigo-100">
               {category}
             </span>
-            <span className="block text-base font-semibold tracking-tight text-slate-950 transition-colors duration-300 group-hover:text-indigo-600">
+            <span className="block text-base font-semibold tracking-tight text-slate-950 transition-colors duration-500 group-hover:text-indigo-600">
               {q}
             </span>
           </div>
@@ -51,11 +51,14 @@ function Item({ q, a, category, index }) {
         </button>
 
         <div
-          style={{ height: `${height}px` }}
-          className="overflow-hidden transition-all duration-400 ease-out"
+          style={{ 
+            height: `${height}px`,
+            transition: 'height 500ms cubic-bezier(0.4, 0, 0.2, 1)'
+          }}
+          className="overflow-hidden"
         >
           <div ref={contentRef} className="px-6 pb-6">
-            <div className="border-t border-slate-200 pt-4 text-sm leading-7 text-slate-600">
+            <div className="border-t border-slate-200 pt-4 text-sm leading-7 text-slate-600 transition-all duration-500">
               {a}
             </div>
           </div>
@@ -72,7 +75,7 @@ const CategoryFilter = ({ categories, activeCategory, setActiveCategory }) => (
       <button
         key={category}
         onClick={() => setActiveCategory(category)}
-        className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-105 active:scale-95 ${
+        className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-500 hover:scale-105 active:scale-95 ${
           activeCategory === category
             ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 text-white shadow-lg shadow-indigo-500/25'
             : 'border border-slate-200 bg-white text-slate-600 backdrop-blur-sm hover:border-indigo-200 hover:bg-slate-50 hover:text-slate-950'
@@ -89,12 +92,12 @@ const CategoryFilter = ({ categories, activeCategory, setActiveCategory }) => (
 // Stats card component
 const StatCard = ({ label, value, icon, delay = 0 }) => (
   <div 
-    className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,250,252,0.96)_100%)] backdrop-blur-sm p-5 shadow-[0_18px_40px_rgba(15,23,42,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-[0_24px_52px_rgba(99,102,241,0.12)] opacity-0 animate-fadeInUp"
+    className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,250,252,0.96)_100%)] backdrop-blur-sm p-5 shadow-[0_18px_40px_rgba(15,23,42,0.08)] transition-all duration-500 ease-out hover:-translate-y-1 hover:border-indigo-200 hover:shadow-[0_24px_52px_rgba(99,102,241,0.12)] opacity-0 animate-fadeInUp"
     style={{ animationDelay: `${delay}s`, animationFillMode: 'forwards' }}
   >
-    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-indigo-500/0 to-indigo-500/0 transition-all duration-300 group-hover:from-indigo-500/5 group-hover:via-indigo-500/5 group-hover:to-indigo-500/10" />
+    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-indigo-500/0 to-indigo-500/0 transition-all duration-500 group-hover:from-indigo-500/5 group-hover:via-indigo-500/5 group-hover:to-indigo-500/10" />
     <div className="relative flex items-center gap-3">
-      <div className="flex size-12 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-400 transition-all duration-300 group-hover:bg-indigo-500/20 group-hover:scale-110">
+      <div className="flex size-12 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-400 transition-all duration-500 group-hover:bg-indigo-500/20 group-hover:scale-110">
         {icon}
       </div>
       <div>
@@ -107,10 +110,10 @@ const StatCard = ({ label, value, icon, delay = 0 }) => (
 
 // Help center card
 const HelpCenterCard = () => (
-  <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,250,252,0.96)_100%)] backdrop-blur-sm p-6 shadow-[0_18px_40px_rgba(15,23,42,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-[0_24px_52px_rgba(99,102,241,0.12)] opacity-0 animate-fadeInUp" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
-    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-indigo-500/0 to-indigo-500/0 transition-all duration-300 group-hover:from-indigo-500/5 group-hover:via-indigo-500/5 group-hover:to-indigo-500/10" />
+  <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,250,252,0.96)_100%)] backdrop-blur-sm p-6 shadow-[0_18px_40px_rgba(15,23,42,0.08)] transition-all duration-500 ease-out hover:-translate-y-1 hover:border-indigo-200 hover:shadow-[0_24px_52px_rgba(99,102,241,0.12)] opacity-0 animate-fadeInUp" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
+    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-indigo-500/0 to-indigo-500/0 transition-all duration-500 group-hover:from-indigo-500/5 group-hover:via-indigo-500/5 group-hover:to-indigo-500/10" />
     <div className="relative">
-      <div className="mb-4 flex size-14 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-400 transition-all duration-300 group-hover:bg-indigo-500/20 group-hover:scale-110">
+      <div className="mb-4 flex size-14 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-400 transition-all duration-500 group-hover:bg-indigo-500/20 group-hover:scale-110">
         <svg className="size-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18.364 5.636L9.172 14.828M12 20h9M4.5 4.5L9.172 9.17M3 12h1.5M12 3v1.5M20 12h-1.5M12 20v1.5" />
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
@@ -120,7 +123,7 @@ const HelpCenterCard = () => (
       <p className="mt-2 text-sm leading-relaxed text-slate-600">
         Can't find what you're looking for? Our support team is ready to help you with any questions.
       </p>
-      <Button as={Link} to="/contact" variant="secondary" className="mt-5 w-full justify-center border-slate-200 bg-white text-slate-900 hover:border-indigo-200 hover:bg-slate-50">
+      <Button as={Link} to="/contact" variant="secondary" className="mt-5 w-full justify-center border-slate-200 bg-white text-slate-900 hover:border-indigo-200 hover:bg-slate-50 transition-all duration-500">
         Contact support
       </Button>
     </div>
@@ -129,9 +132,9 @@ const HelpCenterCard = () => (
 
 // CTA card
 const CTACard = () => (
-  <div className="group relative overflow-hidden rounded-2xl border border-indigo-100 bg-[linear-gradient(135deg,#eef4ff_0%,#ffffff_100%)] p-6 shadow-[0_22px_52px_rgba(15,23,42,0.08)] transition-all duration-300 hover:shadow-[0_28px_58px_rgba(99,102,241,0.12)] opacity-0 animate-fadeInUp" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
-    <div className="absolute -right-12 -top-12 size-40 rounded-full bg-indigo-500/20 blur-3xl transition-all duration-300 group-hover:scale-150" />
-    <div className="absolute -bottom-12 -left-12 size-40 rounded-full bg-indigo-500/20 blur-3xl transition-all duration-300 group-hover:scale-150" />
+  <div className="group relative overflow-hidden rounded-2xl border border-indigo-100 bg-[linear-gradient(135deg,#eef4ff_0%,#ffffff_100%)] p-6 shadow-[0_22px_52px_rgba(15,23,42,0.08)] transition-all duration-500 ease-out hover:shadow-[0_28px_58px_rgba(99,102,241,0.12)] opacity-0 animate-fadeInUp" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
+    <div className="absolute -right-12 -top-12 size-40 rounded-full bg-indigo-500/20 blur-3xl transition-all duration-500 group-hover:scale-150" />
+    <div className="absolute -bottom-12 -left-12 size-40 rounded-full bg-indigo-500/20 blur-3xl transition-all duration-500 group-hover:scale-150" />
     <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent" />
 
     <div className="relative">
@@ -145,10 +148,10 @@ const CTACard = () => (
         Get in touch with our team to discuss your specific requirements and how we can help.
       </p>
       <div className="mt-6 flex flex-col gap-3">
-        <Button as={Link} to="/contact" className="w-full justify-center bg-indigo-600 text-white shadow-lg shadow-indigo-500/25 hover:bg-indigo-500 hover:shadow-xl">
+        <Button as={Link} to="/contact" className="w-full justify-center bg-indigo-600 text-white shadow-lg shadow-indigo-500/25 hover:bg-indigo-500 transition-all duration-500">
           Schedule a call
         </Button>
-        <Button as={Link} to="/services" variant="secondary" className="w-full justify-center border-slate-200 bg-white text-slate-900 hover:border-indigo-200 hover:bg-slate-50">
+        <Button as={Link} to="/services" variant="secondary" className="w-full justify-center border-slate-200 bg-white text-slate-900 hover:border-indigo-200 hover:bg-slate-50 transition-all duration-500">
           View services
         </Button>
       </div>
@@ -163,7 +166,7 @@ const SearchBar = ({ onSearch }) => {
   return (
     <div className="relative mb-6 opacity-0 animate-fadeInUp" style={{ animationFillMode: 'forwards' }}>
       <svg
-        className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-slate-400 transition-colors duration-200"
+        className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-slate-400 transition-colors duration-500"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -178,7 +181,7 @@ const SearchBar = ({ onSearch }) => {
           setQuery(e.target.value)
           onSearch(e.target.value)
         }}
-        className="w-full rounded-2xl border border-slate-200 bg-white py-3.5 pl-12 pr-4 text-sm text-slate-900 placeholder:text-slate-400 backdrop-blur-sm transition-all duration-200 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:bg-white"
+        className="w-full rounded-2xl border border-slate-200 bg-white py-3.5 pl-12 pr-4 text-sm text-slate-900 placeholder:text-slate-400 backdrop-blur-sm transition-all duration-500 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:bg-white"
       />
     </div>
   )
@@ -211,10 +214,10 @@ const SupportCenterHeader = () => (
 
 // Info Box Component
 const InfoBox = ({ title, description, icon, gradient }) => (
-  <div className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${gradient} p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl opacity-0 animate-fadeInUp`} style={{ animationFillMode: 'forwards' }}>
-    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/0 to-white/0 transition-all duration-300 group-hover:from-white/5 group-hover:via-white/5 group-hover:to-white/10" />
+  <div className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${gradient} p-6 shadow-lg transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-2xl opacity-0 animate-fadeInUp`} style={{ animationFillMode: 'forwards' }}>
+    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/0 to-white/0 transition-all duration-500 group-hover:from-white/5 group-hover:via-white/5 group-hover:to-white/10" />
     <div className="relative">
-      <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-white/70 text-indigo-700 transition-all duration-300 group-hover:scale-110">
+      <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-white/70 text-indigo-700 transition-all duration-500 group-hover:scale-110">
         {icon}
       </div>
       <h3 className="text-lg font-semibold text-slate-950">{title}</h3>
@@ -246,9 +249,9 @@ const PopularTopics = ({ onSelectCategory }) => {
           <button
             key={idx}
             onClick={() => onSelectCategory(topic.category)}
-            className="group relative overflow-hidden rounded-full border border-slate-200 bg-white px-5 py-2.5 backdrop-blur-sm transition-all duration-300 hover:border-indigo-200 hover:bg-indigo-50 hover:scale-105"
+            className="group relative overflow-hidden rounded-full border border-slate-200 bg-white px-5 py-2.5 backdrop-blur-sm transition-all duration-500 hover:border-indigo-200 hover:bg-indigo-50 hover:scale-105"
           >
-            <span className="relative flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors duration-300 group-hover:text-indigo-600">
+            <span className="relative flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors duration-500 group-hover:text-indigo-600">
               <span className="text-base">{topic.icon}</span>
               {topic.name}
             </span>
@@ -420,10 +423,10 @@ export default function FaqPage() {
         theme="light"
         actions={
           <div className="flex flex-wrap justify-center gap-3">
-            <Button as={Link} to="/contact" className="bg-indigo-600 shadow-lg shadow-indigo-500/25 hover:bg-indigo-500">
+            <Button as={Link} to="/contact" className="bg-indigo-600 shadow-lg shadow-indigo-500/25 hover:bg-indigo-500 transition-all duration-500">
               Ask a question
             </Button>
-            <Button as={Link} to="/blog" variant="secondary" className="border-slate-200 bg-white text-slate-900 hover:border-indigo-200 hover:bg-slate-50">
+            <Button as={Link} to="/blog" variant="secondary" className="border-slate-200 bg-white text-slate-900 hover:border-indigo-200 hover:bg-slate-50 transition-all duration-500">
               Read documentation
             </Button>
           </div>
@@ -460,7 +463,7 @@ export default function FaqPage() {
               />
 
               {filteredItems.length === 0 ? (
-                <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white py-16 text-center shadow-[0_18px_40px_rgba(15,23,42,0.08)]">
+                <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white py-16 text-center shadow-[0_18px_40px_rgba(15,23,42,0.08)] transition-all duration-500">
                   <div className="mb-4 rounded-full bg-indigo-500/10 p-4">
                     <svg className="size-10 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -491,16 +494,16 @@ export default function FaqPage() {
           </div>
 
           {/* Still have questions section */}
-          <div className="mt-16 rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-[0_18px_40px_rgba(15,23,42,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-[0_24px_52px_rgba(99,102,241,0.12)] opacity-0 animate-fadeInUp" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
+          <div className="mt-16 rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-[0_18px_40px_rgba(15,23,42,0.08)] transition-all duration-500 ease-out hover:-translate-y-1 hover:border-indigo-200 hover:shadow-[0_24px_52px_rgba(99,102,241,0.12)] opacity-0 animate-fadeInUp" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
             <h3 className="text-2xl font-semibold text-slate-950">Still have questions?</h3>
             <p className="mx-auto mt-3 max-w-md text-slate-600">
               Can't find the answer you're looking for? Our team is here to help you.
             </p>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-              <Button as={Link} to="/contact" className="bg-indigo-600 shadow-lg shadow-indigo-500/25 hover:bg-indigo-500">
+              <Button as={Link} to="/contact" className="bg-indigo-600 shadow-lg shadow-indigo-500/25 hover:bg-indigo-500 transition-all duration-500">
                 Contact support
               </Button>
-              <Button as={Link} to="/docs" variant="secondary" className="border-slate-200 bg-white text-slate-900 hover:border-indigo-200 hover:bg-slate-50">
+              <Button as={Link} to="/docs" variant="secondary" className="border-slate-200 bg-white text-slate-900 hover:border-indigo-200 hover:bg-slate-50 transition-all duration-500">
                 Browse documentation
               </Button>
             </div>
