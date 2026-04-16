@@ -3,9 +3,7 @@ import Button from '../../components/ui/Button.jsx'
 import Container from '../../components/ui/Container.jsx'
 import PageHero from '../../components/ui/PageHero.jsx'
 import Reveal from '../../components/ui/Reveal.jsx'
-
-const STORAGE_KEY = 'corporatekit-cookie-consent'
-const COOKIE_NAME = 'corporatekit_cookie_consent'
+import { clearStoredConsent } from '../../utils/cookieConsent.js'
 
 const AnimatedIcon = ({ isOpen }) => (
   <div className={`relative size-10 transition-transform duration-500 ${isOpen ? 'rotate-45' : ''}`}>
@@ -79,15 +77,7 @@ export default function PrivacyPage() {
   const [resetMessage, setResetMessage] = useState('')
 
   function handleResetCookiePreferences() {
-    if (typeof document !== 'undefined') {
-      document.cookie = `${COOKIE_NAME}=; path=/; max-age=0; SameSite=Lax`
-    }
-
-    try {
-      window.localStorage.removeItem(STORAGE_KEY)
-    } catch {
-      // Ignore storage errors and still surface a success message.
-    }
+    clearStoredConsent()
 
     setResetMessage(
       'Cookie preferences were reset. Refresh or reopen the page to see the consent banner again.',

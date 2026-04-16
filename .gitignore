@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 src/_tmp_delete_test.txt
+tmp/ref_testimonials/
 
 # Editor directories and files
 .vscode/*
