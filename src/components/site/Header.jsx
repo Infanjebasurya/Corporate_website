@@ -307,6 +307,9 @@ export default function Header() {
   const [overlay, setOverlay] = useState(false)
 
   const isBlogRoute = location.pathname === '/blog' || location.pathname.startsWith('/blog/')
+  const isTestimonialsRoute = location.pathname === '/testimonials'
+  const isFloatingHeaderRoute = isBlogRoute || isTestimonialsRoute
+  const overlayUsesLightTone = isBlogRoute
 
   useEffect(() => {
     setActiveKey('')
@@ -314,7 +317,7 @@ export default function Header() {
   }, [location.pathname])
 
   useEffect(() => {
-    if (!isBlogRoute) {
+    if (!isFloatingHeaderRoute) {
       setOverlay(false)
       return
     }
@@ -332,7 +335,7 @@ export default function Header() {
     update()
     window.addEventListener('scroll', update, { passive: true })
     return () => window.removeEventListener('scroll', update)
-  }, [isBlogRoute])
+  }, [isFloatingHeaderRoute])
 
   useEffect(() => {
     if (!open) return
@@ -346,8 +349,20 @@ export default function Header() {
   const activeNav =
     navItems.find((item) => item.key === activeKey && !item.direct) ?? null
 
+  const tone = overlay && overlayUsesLightTone ? 'light' : 'dark'
+  const desktopShellClass = overlay
+    ? overlayUsesLightTone
+      ? 'border-white/14 bg-black/18 shadow-none'
+      : 'border-[#e8dfd3] bg-[#f5f2ed]/90 shadow-[0_18px_52px_rgba(15,23,42,0.08),inset_0_1px_0_rgba(255,255,255,0.7)]'
+    : 'border-slate-200/80 bg-[linear-gradient(180deg,rgba(248,250,252,0.96)_0%,rgba(241,245,249,0.9)_100%)] shadow-[0_18px_52px_rgba(15,23,42,0.08),inset_0_1px_0_rgba(255,255,255,0.7)]'
+  const mobileShellClass = overlay
+    ? overlayUsesLightTone
+      ? 'border-white/14 bg-black/18 shadow-none'
+      : 'border-[#e8dfd3] bg-[#f5f2ed]/90 shadow-[0_14px_40px_rgba(15,23,42,0.08)]'
+    : 'border-slate-200/80 bg-[linear-gradient(180deg,rgba(248,250,252,0.96)_0%,rgba(241,245,249,0.9)_100%)] shadow-[0_14px_40px_rgba(15,23,42,0.08)]'
+
   return (
-    <header className={`${isBlogRoute ? 'fixed inset-x-0 top-0' : 'sticky top-0'} z-50 pt-4 sm:pt-5`}>
+    <header className={`${isFloatingHeaderRoute ? 'fixed inset-x-0 top-0' : 'sticky top-0'} z-50 pt-4 sm:pt-5`}>
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-xl focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:shadow-sm focus:outline-none"
@@ -358,14 +373,10 @@ export default function Header() {
       <Container className="relative max-w-7xl">
         <div className="hidden md:block" onMouseLeave={() => setActiveKey('')}>
           <div
-            className={`overflow-hidden rounded-[2.15rem] border backdrop-blur-xl ${
-              overlay
-                ? 'border-white/14 bg-black/18 shadow-none'
-                : 'border-slate-200/80 bg-[linear-gradient(180deg,rgba(248,250,252,0.96)_0%,rgba(241,245,249,0.9)_100%)] shadow-[0_18px_52px_rgba(15,23,42,0.08),inset_0_1px_0_rgba(255,255,255,0.7)]'
-            }`}
+            className={`overflow-hidden rounded-[2.15rem] border backdrop-blur-xl ${desktopShellClass}`}
           >
             <div className="flex items-center justify-between gap-6 px-6 py-2.5 lg:px-10 lg:py-3">
-              <Logo tone={overlay ? 'light' : 'dark'} />
+              <Logo tone={tone} />
 
               <nav className="flex items-center gap-2" aria-label="Primary">
                 {navItems.map((item) => (
@@ -375,7 +386,7 @@ export default function Header() {
                       label={item.label}
                       path={item.path}
                       onClick={() => setActiveKey('')}
-                      tone={overlay ? 'light' : 'dark'}
+                      tone={tone}
                     />
                   ) : (
                     <DesktopNavLink
@@ -383,17 +394,17 @@ export default function Header() {
                       label={item.label}
                       isActive={activeKey === item.key}
                       onEnter={() => setActiveKey(item.key)}
-                      tone={overlay ? 'light' : 'dark'}
+                      tone={tone}
                     />
                   )
                 ))}
               </nav>
 
               <div className="flex items-center gap-2.5">
-                <HeaderAction to="/contact" dark tone={overlay ? 'light' : 'dark'}>
+                <HeaderAction to="/contact" dark tone={tone}>
                   Get a quote
                 </HeaderAction>
-                <HeaderAction to="/services" dark={overlay} tone={overlay ? 'light' : 'dark'}>
+                <HeaderAction to="/services" dark={overlay && !isTestimonialsRoute} tone={tone}>
                   View pricing
                 </HeaderAction>
               </div>
@@ -478,14 +489,10 @@ export default function Header() {
         </div>
 
         <div
-          className={`rounded-[1.6rem] border p-4 backdrop-blur md:hidden ${
-            overlay
-              ? 'border-white/14 bg-black/18 shadow-none'
-              : 'border-slate-200/80 bg-[linear-gradient(180deg,rgba(248,250,252,0.96)_0%,rgba(241,245,249,0.9)_100%)] shadow-[0_14px_40px_rgba(15,23,42,0.08)]'
-          }`}
+          className={`rounded-[1.6rem] border p-4 backdrop-blur md:hidden ${mobileShellClass}`}
         >
           <div className="flex items-center justify-between gap-4">
-            <Logo tone={overlay ? 'light' : 'dark'} />
+            <Logo tone={tone} />
             <button
               type="button"
               className={`inline-flex items-center justify-center rounded-2xl border p-3 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
@@ -519,15 +526,15 @@ export default function Header() {
                     label={item.label}
                     path={item.path}
                     onClick={() => setOpen(false)}
-                    tone={overlay ? 'light' : 'dark'}
+                    tone={tone}
                   />
                 ))}
               </div>
               <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <HeaderAction to="/contact" dark tone={overlay ? 'light' : 'dark'}>
+                <HeaderAction to="/contact" dark tone={tone}>
                   Get a quote
                 </HeaderAction>
-                <HeaderAction to="/services" tone={overlay ? 'light' : 'dark'}>
+                <HeaderAction to="/services" dark={overlay && !isTestimonialsRoute} tone={tone}>
                   View pricing
                 </HeaderAction>
               </div>

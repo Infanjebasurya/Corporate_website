@@ -1,5 +1,7 @@
 ﻿import Container from '../../../components/ui/Container.jsx'
 import Reveal from '../../../components/ui/Reveal.jsx'
+import Button from '../../../components/ui/Button.jsx'
+import { Link } from 'react-router-dom'
 
 const testimonials = [
   {
@@ -150,6 +152,12 @@ export default function TestimonialsSection() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal className="mt-12 flex justify-center">
+          <Button as={Link} to="/testimonials" variant="secondary" className="rounded-full px-7 py-3">
+            See more testimonials
+          </Button>
+        </Reveal>
       </Container>
     </section>
   )

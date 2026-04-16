@@ -17,6 +17,7 @@ const BlogDetailPage = lazy(() => import('../pages/blog/BlogDetailPage.jsx'))
 const TermsPage = lazy(() => import('../pages/terms/TermsPage.jsx'))
 const PrivacyPage = lazy(() => import('../pages/privacy/PrivacyPage.jsx'))
 const NotFoundPage = lazy(() => import('../pages/not-found/NotFoundPage.jsx'))
+const TestimonialsPage = lazy(() => import('../pages/testimonials/TestimonialsPage.jsx'))
 
 function ScrollToTop() {
   const location = useLocation()
@@ -45,6 +46,7 @@ function AppRoutes() {
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/blog" element={<BlogListPage />} />
           <Route path="/blog/:slug" element={<BlogDetailPage />} />
+          <Route path="/testimonials" element={<TestimonialsPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="*" element={<NotFoundPage />} />
