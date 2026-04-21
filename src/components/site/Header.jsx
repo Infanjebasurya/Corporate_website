@@ -372,9 +372,10 @@ export default function Header() {
 
       <Container className="relative max-w-7xl">
         <div className="hidden md:block" onMouseLeave={() => setActiveKey('')}>
-          <div
-            className={`overflow-hidden rounded-[2.15rem] border backdrop-blur-xl ${desktopShellClass}`}
-          >
+          <div className="relative">
+            <div
+              className={`overflow-hidden rounded-[2.15rem] border backdrop-blur-xl ${desktopShellClass}`}
+            >
             <div className="flex items-center justify-between gap-6 px-6 py-2.5 lg:px-10 lg:py-3">
               <Logo tone={tone} />
 
@@ -410,10 +411,14 @@ export default function Header() {
               </div>
             </div>
 
+            </div>
+
             {activeNav ? (
               <div
-                className={`border-t px-8 py-10 lg:px-12 lg:py-12 ${
-                  overlay ? 'border-white/12 bg-black/28' : 'border-slate-200/80 bg-slate-50/80'
+                className={`absolute left-0 right-0 top-full z-40 -mt-px overflow-hidden rounded-[2.15rem] border px-8 py-10 lg:px-12 lg:py-12 ${
+                  overlay
+                    ? 'border-slate-200/80 bg-white'
+                    : 'border-slate-200/80 bg-white'
                 }`}
               >
                 <div className={`grid gap-10 ${activeNav.feature ? 'xl:grid-cols-[1.5fr_0.88fr]' : ''}`}>
@@ -425,12 +430,12 @@ export default function Header() {
                         </div>
                         <div className="space-y-5">
                           {section.links.map((link) => (
-                          <Link
-                            key={link.label}
-                            to={link.path}
-                            onClick={() => setActiveKey('')}
-                            className="group flex items-start gap-4 rounded-2xl px-1 py-1 pr-4 transition hover:bg-slate-50/90"
-                          >
+                            <Link
+                              key={link.label}
+                              to={link.path}
+                              onClick={() => setActiveKey('')}
+                              className="group flex items-start gap-4 rounded-2xl px-1 py-1 pr-4 transition hover:bg-slate-50/90"
+                            >
                               <span
                                 className={`mt-0.5 inline-flex size-14 shrink-0 items-center justify-center rounded-2xl border ${
                                   accentClasses[link.accent] ?? accentClasses.indigo
