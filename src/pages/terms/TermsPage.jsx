@@ -16,13 +16,11 @@ const AnimatedIcon = ({ isOpen }) => (
 
 function Section({ title, children, category = 'Terms', defaultOpen = false }) {
   const [open, setOpen] = useState(defaultOpen)
-  const [supportsHover, setSupportsHover] = useState(false)
+  const [supportsHover] = useState(
+    () => window.matchMedia?.('(hover: hover) and (pointer: fine)')?.matches ?? false,
+  )
   const contentRef = useRef(null)
   const [height, setHeight] = useState(0)
-
-  useEffect(() => {
-    setSupportsHover(window.matchMedia?.('(hover: hover) and (pointer: fine)')?.matches ?? false)
-  }, [])
 
   useEffect(() => {
     if (open && contentRef.current) {
@@ -33,11 +31,13 @@ function Section({ title, children, category = 'Terms', defaultOpen = false }) {
   }, [open, children])
 
   return (
-    <div className="group transform-gpu overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,250,252,0.96)_100%)] shadow-[0_18px_40px_rgba(15,23,42,0.08)] transition-all duration-500 ease-out hover:-translate-y-1 hover:scale-[1.01] hover:border-indigo-200 hover:shadow-[0_24px_52px_rgba(99,102,241,0.12)]">
+    <div
+      className="group mx-auto max-w-4xl transform-gpu overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,250,252,0.96)_100%)] shadow-[0_18px_40px_rgba(15,23,42,0.08)] transition-all duration-500 ease-out hover:-translate-y-1 hover:scale-[1.01] hover:border-indigo-200 hover:shadow-[0_24px_52px_rgba(99,102,241,0.12)]"
+      onMouseEnter={supportsHover ? () => setOpen(true) : undefined}
+      onMouseLeave={supportsHover ? () => setOpen(false) : undefined}
+    >
       <div
-        className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-all duration-500 hover:bg-slate-50"
-        onMouseEnter={supportsHover ? () => setOpen(true) : undefined}
-        onMouseLeave={supportsHover ? () => setOpen(false) : undefined}
+        className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-all duration-500 hover:bg-slate-50"
         onClick={supportsHover ? undefined : () => setOpen((v) => !v)}
         role="button"
         tabIndex={supportsHover ? -1 : 0}
@@ -61,7 +61,7 @@ function Section({ title, children, category = 'Terms', defaultOpen = false }) {
         }}
         className="overflow-hidden"
       >
-        <div ref={contentRef} className="px-6 pb-6">
+        <div ref={contentRef} className="px-5 pb-5">
           <div className="border-t border-slate-200 pt-4 text-sm leading-7 text-slate-600 transition-all duration-500">
             {children}
           </div>
